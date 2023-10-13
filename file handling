@@ -1,0 +1,22 @@
+// fs module imported to allow file read and write. it is then assigned to the constant variable 'fs' so that referencing it in code is easier
+const fs = require("fs");
+
+// this creates a file called test, and writes two lines of text into it.
+fs.writeFile('test.txt', 'This is a test \nand this is a new line', function(err, fd) {
+    // This is some error handling where if an error occurs, then it is returned to the console.
+    // This is not always the best solution because if a client experiences the error, I as the coder, will not be able to see it since i will not have access to their console to see the error.
+    // In order to fix this i could use a logger like winston to log and rotate the errors after a predetermined amount of time.
+    if (err) {
+        return console.error(err);
+    }
+    // msg to confirm that the file was created
+    console.log("file created successfuly");
+});
+
+// data in the file is read, and then returned in the console
+fs.readFile('test.txt', 'utf8', function(err, data){
+    console.log(data);
+})
+
+// msg to confirm succesful file read
+console.log("readfile called");
