@@ -1,0 +1,97 @@
+// creating the node class which contains the attributes data and next referring to the data in each node and the pointer
+class Node {
+    constructor(data) {
+       this.data = data;
+       this.next = null;
+    }
+ }
+//  creating the actual list class which contains the attributes head (referring to the posiiton of the first eleemnt in the list), tail which is the last position of item in the list
+//  and length which refers to the length of the list
+ class LinkedList {
+    constructor() {
+       this.head = null;
+       this.tail = null;
+       this.length = 0;
+    }
+    
+    // function to add data to linked list
+    add(data) {
+       const newNode = new Node(data);
+    // This method adds a new node with the given data to the end of the linked list. If the list is empty, the new node becomes both the head and the tail. 
+       if (!this.head) {
+          this.head = newNode;
+          this.tail = newNode;
+       } 
+           // Otherwise, it updates the next reference of the current tail to point to the new node and then updates the tail to be the new node.
+       else {
+          this.tail.next = newNode;
+          this.tail = newNode;
+       }
+    //    increments length of list by one each time a node is added
+       this.length++;
+       return this;
+    }
+    
+    // This method removes the first occurrence of a node with the specified data. 
+    // It iterates through the list, and if it finds the node to be removed, it adjusts the next reference of the preceding node to skip the node to be removed.
+    remove(data) {
+       if (!this.head) {
+          return null;
+       }
+       if (this.head.data === data) {
+          this.head = this.head.next;
+        //   decreases length of list by 1
+          this.length--;
+          return this;
+       }
+       let current = this.head;
+       while (current.next) {
+          if (current.next.data === data) {
+             current.next = current.next.next;
+             this.length--;
+             return this;
+          }
+          current = current.next;
+       }
+       return null;
+    }
+    
+    // This method removes the node at the specified index. It first checks if the index is valid. If the index is 0, it calls the remove method to remove the head. 
+    // Otherwise, it iterates through the list to the node before the one to be removed and adjusts the next reference.
+       removeAt(index) {
+       if (index < 0 || index >= this.length) return null;
+       if (index === 0) return this.remove();
+       let current = this.head;
+       for (let i = 0; i < index - 1; i++) {
+          current = current.next;
+       }
+       current.next = current.next.next;
+       this.length--;
+       return this;
+    }
+    
+    // this function is used to iterate over the entire linkedlist and print the data of each node
+    printAll() {
+       let current = this.head;
+       while (current) {
+          console.log(current.data);
+          current = current.next;
+       }
+    }
+ }
+ const list = new LinkedList();
+// creates instance of linked list class, and assigns it to the constant list
+
+ // example usage of code
+ list.add("Ferrari");
+ list.add("Aston Martin");
+ list.add("McLaren");
+ list.add("Maserati");
+ console.log("Initial List:");
+ list.printAll();
+ console.log("List after removing Maserati");
+ list.remove("Maserati");
+ list.printAll();
+ console.log("List after removing node at index 2");
+ list.removeAt(2);
+ list.printAll();
